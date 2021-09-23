@@ -1,27 +1,56 @@
-const myWholeBusinessCard = document.querySelector("#business-card");
-const myNameElement = document.querySelector("h1");
+const businessCardElement = document.querySelector("#business-card");
 
-console.dir(myNameElement);
+const phoneNumber = document.querySelector("phone-number");
 
-myWholeBusinessCard.addEventListener("click", function () {
-    myWholeBusinessCard.classList.add("red");
-    const brandNewH2 = document.createElement("h2");
-    brandNewH2.innerText = "It's red now!";
-    myWholeBusinessCard.appendChild(brandNewH2);
-    setTimeout(() => {
-        myWholeBusinessCard.remove();
-        setTimeout(() => {
-            document.body.appendChild(myWholeBusinessCard)
-        }, 2000)
-    }, 3000);
+const makeMyCardPurple = () => {
+    businessCardElement.style.background = "purple";
+}
+
+const makeMyCardWhite = () => {
+    businessCardElement.style.background = "white";
+}
+
+businessCardElement.addEventListener(
+    "click",
+    function(event) {
+        console.log(event);
+        if (businessCardElement.style.background === "purple") {
+            makeMyCardWhite();
+        } else {
+            makeMyCardPurple();
+        }
+    }
+)
+
+phoneNumber.addEventListener("click", function(event) {
+    event.stopPropoagation();
+    console.log("Phone was clicked!");
 })
 
-// setTimeout(() => {
-   
-// }, 3000);
+const buttonSection = document.querySelector("#button-section");
 
-setInterval(() => {
-    const colors = ["red", "purple", "green", "blue"];
-    const chosenColor = colors[Math.floor(Math.random() * colors.length)]
-    myNameElement.style.color = chosenColor
-  }, 200);
+buttonSection.addEventListener("click", function (event) {
+
+    console.log(this);
+
+    const exactButtonThatWasClicked = event.target;
+
+    const action = exactButtonThatWasClicked.id;
+
+    if (action === "purple") {
+        makeMyCardPurple();
+    } else if (action === "white") {
+        makeMyCardWhite();
+    } else if (action === "spin") {
+        // todo
+    } else {
+        throw new Error("UNKNOWN ACTION")
+    }
+})
+
+setTimeout(() => {
+    const newButton = document.createElement("button");
+    newButton.innerText = "MAKE MY CARD WHITE";
+    newButton.id = "white";
+    buttonSection.appendChild(newButton);
+}, 5000)
